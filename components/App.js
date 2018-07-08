@@ -7,35 +7,35 @@ App = React.createClass({
     };
   },
 
-  handleSearch: function(searchingText) {  // 1.
+  handleSearch: function(searchingText) {
     this.setState({
-      loading: true  // 2.
+      loading: true
     });
 
-    this.getGif(searchingText, function(gif) {  // 3.
-      this.setState({  // 4
-        loading: false,  // a
-        gif: gif,  // b
-        searchingText: searchingText  // c
+    this.getGif(searchingText, function(gif) {
+      this.setState({
+        loading: false,
+        gif: gif,
+        searchingText: searchingText
       });
     }.bind(this));
   },
 
-  getGif: function(searchingText, callback) {  // 1.
-    var url = 'http://api.giphy.com/v1/gifs/search?q=' + searchingText + '&api_key=dc6zaTOxFJmzC&limit=1';  // 2.
-    var xhr = new XMLHttpRequest();  // 3.
+  getGif: function(searchingText, callback) {
+    var url = 'http://api.giphy.com/v1/gifs/search?q=' + searchingText + '&api_key=dc6zaTOxFJmzC&limit=1';
+    var xhr = new XMLHttpRequest();
 
     xhr.open('GET', url);
     xhr.onload = function() {
       if (xhr.status === 200) {
-        var data = JSON.parse(xhr.responseText).data; // 4.
-        var gif = {  // 5.
+        var data = JSON.parse(xhr.responseText).data;
+        var gif = {
           url: data[0].images.original.url,
           sourceUrl: data[0].url
         };
         console.log(data);
 
-        callback(gif);  // 6.
+        callback(gif);
       }
     };
     xhr.send();
